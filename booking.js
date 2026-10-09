@@ -5,7 +5,7 @@ const OPEN = { weekday: 9, weekend: 11 }; // година відкриття
 const LAST = 21;                           // останній початок броні
 const PHONE_TEXT = '093 609 05 08';
 // Ключ сайту (Site key) з Cloudflare Turnstile. Поки порожній, перевірка «я не робот» вимкнена.
-const TURNSTILE_SITE_KEY = '';
+const TURNSTILE_SITE_KEY = '0x4AAAAAAFSoc8inME7OPeJR';
 // ==========================
 
 (function () {
