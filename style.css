@@ -225,3 +225,7 @@ nav .nav-call{display:none}
 .book-ok p{margin:0 0 22px;color:var(--mute)}
 .book-ok .btn.soft{border:1px solid var(--line);font:inherit;font-weight:600;cursor:pointer}
 @media(prefers-color-scheme:dark){.ferr,.form-msg{color:#f2a8a0}.field [aria-invalid="true"]{border-color:#f2a8a0}}
+
+/* Turnstile */
+.ts{margin:4px 0 12px}
+.ts:empty{display:none}

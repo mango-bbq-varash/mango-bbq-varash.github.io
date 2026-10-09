@@ -4,6 +4,8 @@ const BOOKING_ENDPOINT = 'https://restaurant-booking.tieleshovandrey.workers.dev
 const OPEN = { weekday: 9, weekend: 11 }; // година відкриття
 const LAST = 21;                           // останній початок броні
 const PHONE_TEXT = '093 609 05 08';
+// Ключ сайту (Site key) з Cloudflare Turnstile. Поки порожній, перевірка «я не робот» вимкнена.
+const TURNSTILE_SITE_KEY = '';
 // ==========================
 
 (function () {
@@ -70,16 +72,31 @@ const PHONE_TEXT = '093 609 05 08';
   }
   function show(text) { msg.textContent = text; msg.hidden = !text; }
 
+  // --- Захист від спаму: Cloudflare Turnstile ---
+  let tsId = null, tsToken = '';
+  function mountTs() {
+    const box = $('bookTs');
+    if (!TURNSTILE_SITE_KEY || !box) return;
+    if (!window.turnstile) { setTimeout(mountTs, 300); return; }
+    tsId = window.turnstile.render(box, {
+      sitekey: TURNSTILE_SITE_KEY, theme: 'auto', size: window.innerWidth < 380 ? 'compact' : 'normal',
+      callback: (t) => { tsToken = t; }, 'expired-callback': () => { tsToken = ''; }, 'error-callback': () => { tsToken = ''; }
+    });
+  }
+  function resetTs() { tsToken = ''; if (tsId !== null && window.turnstile) window.turnstile.reset(tsId); }
+  mountTs();
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault(); show('');
     if (!validate()) return;
     if (!BOOKING_ENDPOINT) { show('Онлайн-бронювання ще не підключене. Зателефонуйте нам: ' + PHONE_TEXT); return; }
+    if (TURNSTILE_SITE_KEY && !tsToken) { show('Зачекайте секунду: триває перевірка, що ви не робот. Потім натисніть ще раз.'); return; }
     const btn = form.querySelector('button[type=submit]'), label = btn.textContent;
     btn.disabled = true; btn.textContent = 'Надсилаємо…';
     const payload = {
       name: f.name.value.trim(), phone: normPhone(f.phone.value), date: f.date.value, time: f.time.value,
       guests: parseInt(f.guests.value, 10), occasion: f.occ.value, comment: f.note.value.trim(),
-      website: form.elements.website.value, elapsed: Date.now() - loaded
+      website: form.elements.website.value, elapsed: Date.now() - loaded, token: tsToken
     };
     try {
       const r = await fetch(BOOKING_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -93,12 +110,14 @@ const PHONE_TEXT = '093 609 05 08';
     } catch (err) {
       console.error('Бронювання: помилка відправки', err);
       const code = err && err.message;
-      console.log(code);
-      if (code === 'past') show('Ця дата вже минула. Оберіть сьогоднішню чи пізнішу дату або зателефонуйте: ' + PHONE_TEXT);
+      if (code === 'captcha') show('Не вдалося підтвердити, що ви не робот. Оновіть сторінку й спробуйте ще раз.');
+      else if (code === 'rate') show('Забагато спроб. Зачекайте хвилину й спробуйте ще раз.');
+      else if (code === 'spam') show('Заявку не прийнято: приберіть посилання з імені чи побажань або зателефонуйте: ' + PHONE_TEXT);
+      else if (code === 'past') show('Ця дата вже минула. Оберіть сьогоднішню чи пізнішу дату або зателефонуйте: ' + PHONE_TEXT);
       else if (code === 'hours' || code === 'invalid') show('Перевірте дату й час: вони мають бути в майбутньому та в години роботи. Або зателефонуйте: ' + PHONE_TEXT);
       else if (code === 'too_fast') show('Спробуйте ще раз за кілька секунд.');
       else show('Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте: ' + PHONE_TEXT);
-    } finally { btn.disabled = false; btn.textContent = label; }
+    } finally { btn.disabled = false; btn.textContent = label; resetTs(); }
   });
   $('bookAgain').addEventListener('click', () => { form.reset(); f.guests.value = 2; slots(); ok.hidden = true; form.hidden = false; f.name.focus(); });
 })();

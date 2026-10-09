@@ -140,6 +140,7 @@
         </div>
         <div class="field"><label for="bNote">Побажання (необов'язково)</label><textarea id="bNote" name="comment" maxlength="400" placeholder="Наприклад: з дитиною, біля вікна"></textarea></div>
         <div class="hp" aria-hidden="true"><label>Сайт <input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="ts" id="bookTs"></div>
         <button class="btn" type="submit">Надіслати заявку</button>
         <p class="form-msg" id="bookMsg" role="alert" hidden></p>
         <p class="fine">Це заявка, а не підтверджена бронь: ми зателефонуємо вам найближчим часом.</p>
@@ -236,6 +237,7 @@
   window.matchMedia('(min-width:701px)').addEventListener('change',function(){set(false)});
 })();
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="booking.js" defer></script>
 </body>
 </html>
