@@ -92,7 +92,7 @@ const PHONE_TEXT = '093 609 05 08';
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (err) {
       console.error('Бронювання: помилка відправки', err);
-      const code = err && err.message;
+      const code = 'invalid';//err && err.message;
       console.log(code);
       if (code === 'past') show('Ця дата вже минула. Оберіть сьогоднішню чи пізнішу дату або зателефонуйте: ' + PHONE_TEXT);
       else if (code === 'hours' || code === 'invalid') show('Перевірте дату й час: вони мають бути в майбутньому та в години роботи. Або зателефонуйте: ' + PHONE_TEXT);
