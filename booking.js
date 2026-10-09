@@ -13,9 +13,13 @@ const PHONE_TEXT = '093 609 05 08';
   const msg = $('bookMsg'), ok = $('bookOk'), loaded = Date.now();
   const pad = (n) => String(n).padStart(2, '0');
   const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  const today = new Date(), max = new Date(); max.setDate(max.getDate() + 90);
-  f.date.min = iso(today); f.date.max = iso(max);
+  // Дата й час рахуються за Києвом, як і на сервері
+  const kyivISO = (dt) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Kyiv' }).format(dt || new Date());
+  const kyivNowMin = () => { const [h, m] = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Kyiv', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()).split(':').map(Number); return h * 60 + m; };
+  const max = new Date(); max.setDate(max.getDate() + 90);
+  f.date.min = kyivISO(); f.date.max = kyivISO(max);
 
+  const DATE_HINT = () => 'Оберіть дату від сьогодні до ' + max.toLocaleDateString('uk-UA');
   function err(el, text) {
     const s = el.closest('.field').querySelector('.ferr');
     if (!s) return;
@@ -25,20 +29,21 @@ const PHONE_TEXT = '093 609 05 08';
   function slots() {
     f.time.innerHTML = '';
     if (!f.date.value) { f.time.disabled = true; f.time.innerHTML = '<option value="">Спочатку оберіть дату</option>'; return; }
+    if (f.date.value < f.date.min || f.date.value > f.date.max) { f.time.disabled = true; f.time.innerHTML = '<option value="">Оберіть коректну дату</option>'; return; }
     const [y, m, d] = f.date.value.split('-').map(Number);
     const day = new Date(y, m - 1, d), wk = day.getDay() % 6 === 0 ? OPEN.weekend : OPEN.weekday;
-    const isToday = iso(day) === iso(new Date()), limit = Date.now() + 60 * 60000;
+    const isToday = f.date.value === kyivISO(), limit = kyivNowMin() + 60;
     let html = '<option value="">Оберіть час</option>', n = 0;
     for (let t = wk * 60; t <= LAST * 60; t += 30) {
-      const dt = new Date(y, m - 1, d, Math.floor(t / 60), t % 60);
-      if (isToday && dt.getTime() < limit) continue;
-      const v = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+      if (isToday && t < limit) continue;
+      const v = `${pad(Math.floor(t / 60))}:${pad(t % 60)}`;
       html += `<option value="${v}">${v}</option>`; n++;
     }
     f.time.innerHTML = n ? html : '<option value="">На цей день вільних годин немає</option>';
     f.time.disabled = !n;
   }
   f.date.addEventListener('change', () => { err(f.date, ''); slots(); });
+  f.date.addEventListener('blur', () => { if (f.date.value && (f.date.value < f.date.min || f.date.value > f.date.max)) err(f.date, DATE_HINT()); });
   form.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => {
     const v = Math.min(50, Math.max(1, (parseInt(f.guests.value, 10) || 1) + Number(b.dataset.step)));
     f.guests.value = v; err(f.guests, '');
@@ -56,6 +61,7 @@ const PHONE_TEXT = '093 609 05 08';
     if (f.name.value.trim().length < 2) fail(f.name, "Вкажіть ім'я");
     if (!normPhone(f.phone.value)) fail(f.phone, 'Введіть номер у форматі 0XX XXX XX XX');
     if (!f.date.value) fail(f.date, 'Оберіть дату');
+    else if (f.date.value < f.date.min || f.date.value > f.date.max) fail(f.date, DATE_HINT());
     if (!f.time.value) fail(f.time, 'Оберіть час');
     const g = parseInt(f.guests.value, 10);
     if (!(g >= 1 && g <= 50)) fail(f.guests, 'Від 1 до 50 гостей');
@@ -86,7 +92,12 @@ const PHONE_TEXT = '093 609 05 08';
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (err) {
       console.error('Бронювання: помилка відправки', err);
-      show('Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте: ' + PHONE_TEXT);
+      const code = err && err.message;
+      console.log(code);
+      if (code === 'past') show('Ця дата вже минула. Оберіть сьогоднішню чи пізнішу дату або зателефонуйте: ' + PHONE_TEXT);
+      else if (code === 'hours' || code === 'invalid') show('Перевірте дату й час: вони мають бути в майбутньому та в години роботи. Або зателефонуйте: ' + PHONE_TEXT);
+      else if (code === 'too_fast') show('Спробуйте ще раз за кілька секунд.');
+      else show('Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте: ' + PHONE_TEXT);
     } finally { btn.disabled = false; btn.textContent = label; }
   });
   $('bookAgain').addEventListener('click', () => { form.reset(); f.guests.value = 2; slots(); ok.hidden = true; form.hidden = false; f.name.focus(); });
