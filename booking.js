@@ -101,7 +101,7 @@ const TURNSTILE_SITE_KEY = '';
     try {
       const r = await fetch(BOOKING_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok) throw new Error(j.error || 'fail');
+      if (!r.ok || !j.ok) { console.warn('Відповідь сервера:', r.status, j); throw new Error(j.error || 'fail'); }
       const [y, m, d] = payload.date.split('-').map(Number);
       const dateTxt = new Date(y, m - 1, d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' });
       $('bookOkText').textContent = `${payload.name}, ми отримали вашу заявку на ${dateTxt} о ${payload.time} (гостей: ${payload.guests}). Зателефонуємо на ${f.phone.value.trim()} для підтвердження.`;
