@@ -123,6 +123,25 @@
         <li>Останній час для бронювання: 21:00</li>
         <li>Велика компанія? Краще зателефонуйте: <a href="tel:+380936090508">093 609 05 08</a></li>
       </ul>
+      <figure class="plan">
+        <figcaption class="plan-title">Схема залу</figcaption>
+        <svg id="plan" viewBox="0 0 600 460" role="group" aria-label="Схема залу: оберіть стіл">
+          <rect class="room" x="2" y="2" width="596" height="456" rx="14"/>
+          <g class="zone"><rect x="14" y="14" width="150" height="62" rx="8"/><text x="89" y="45">Барна стійка</text></g>
+          <g class="zone billiard"><rect x="360" y="14" width="150" height="82" rx="8"/><text x="435" y="55">Більярд</text></g>
+          <path class="wall" d="M305 130 q-14 25 0 50 t0 50 t0 50 t0 50 t0 50 t0 50"/>
+          <g class="zone"><rect x="370" y="412" width="130" height="30" rx="6"/><text x="435" y="427">TV</text></g>
+      <g class="tbl" data-t="1" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 1"><rect x="20" y="290" width="120" height="54" rx="8"/><text x="80" y="317">1</text></g>
+      <g class="tbl" data-t="2" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 2"><rect x="20" y="170" width="120" height="54" rx="8"/><text x="80" y="197">2</text></g>
+      <g class="tbl" data-t="3" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 3"><rect x="180" y="160" width="100" height="64" rx="8"/><text x="230" y="192">3</text></g>
+      <g class="tbl" data-t="4" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 4"><rect x="330" y="290" width="90" height="54" rx="8"/><text x="375" y="317">4</text></g>
+      <g class="tbl" data-t="5" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 5"><rect x="330" y="170" width="90" height="54" rx="8"/><text x="375" y="197">5</text></g>
+      <g class="tbl" data-t="6" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 6"><rect x="490" y="300" width="100" height="54" rx="8"/><text x="540" y="327">6</text></g>
+      <g class="tbl" data-t="7" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 7"><rect x="490" y="210" width="100" height="54" rx="8"/><text x="540" y="237">7</text></g>
+      <g class="tbl" data-t="8" tabindex="0" role="button" aria-pressed="false" aria-label="Стіл 8"><rect x="490" y="120" width="100" height="54" rx="8"/><text x="540" y="147">8</text></g>
+        </svg>
+        <p class="plan-hint">Натисніть на стіл, щоб обрати його. Ми врахуємо побажання, а остаточно стіл підтвердимо по телефону.</p>
+      </figure>
     </div>
     <div class="book-card">
       <form id="bookForm" novalidate>
@@ -138,6 +157,7 @@
             <small class="ferr" hidden></small></div>
           <div class="field"><label for="bOcc">Привід</label><select id="bOcc" name="occasion"><option>Звичайний візит</option><option>День народження</option><option>Банкет</option><option>Корпоратив</option><option>Більярд</option></select></div>
         </div>
+        <div class="field"><label for="bTable">Бажаний стіл</label><select id="bTable" name="table"><option value="">Будь-який вільний</option><option value="1">Стіл 1</option><option value="2">Стіл 2</option><option value="3">Стіл 3</option><option value="4">Стіл 4</option><option value="5">Стіл 5</option><option value="6">Стіл 6</option><option value="7">Стіл 7</option><option value="8">Стіл 8</option></select></div>
         <div class="field"><label for="bNote">Побажання (необов'язково)</label><textarea id="bNote" name="comment" maxlength="400" placeholder="Наприклад: з дитиною, біля вікна"></textarea></div>
         <div class="hp" aria-hidden="true"><label>Сайт <input name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="ts" id="bookTs"></div>

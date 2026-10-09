@@ -229,3 +229,22 @@ nav .nav-call{display:none}
 /* Turnstile */
 .ts{margin:4px 0 12px}
 .ts:empty{display:none}
+
+/* Схема залу */
+.plan{margin:32px 0 0}
+.plan-title{margin-bottom:10px;font-weight:600;color:#f6f1e7}
+.plan svg{display:block;width:100%;max-width:520px;height:auto}
+.plan .room{fill:rgba(246,241,231,.04);stroke:rgba(246,241,231,.35);stroke-width:2}
+.plan .zone rect{fill:rgba(246,241,231,.1);stroke:rgba(246,241,231,.3);stroke-width:1.5}
+.plan .billiard rect{fill:#1f7a5c}
+.plan text{fill:#f6f1e7;font:600 15px "Nunito Sans",system-ui,sans-serif;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.plan .wall{fill:none;stroke:rgba(246,241,231,.45);stroke-width:2.5;stroke-dasharray:2 6;stroke-linecap:round}
+.plan .tbl{cursor:pointer;outline:none}
+.plan .tbl rect{fill:#1d5247;stroke:rgba(246,241,231,.6);stroke-width:2;transition:fill .2s,stroke .2s}
+.plan .tbl text{font-size:26px;font-weight:700}
+.plan .tbl:hover rect{fill:#26695b;stroke:#f6f1e7}
+.plan .tbl:focus-visible rect{stroke:#f6f1e7;stroke-width:4}
+.plan .tbl.on rect{fill:#f6f1e7;stroke:#f6f1e7}
+.plan .tbl.on text{fill:#143a33}
+.plan-hint{margin:10px 0 0;font-size:14px;color:#c9d4cd}
+@media(hover:none){.plan .tbl:not(.on):hover rect{fill:#1d5247;stroke:rgba(246,241,231,.6)}}

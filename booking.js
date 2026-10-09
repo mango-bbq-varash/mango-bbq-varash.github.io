@@ -5,7 +5,7 @@ const OPEN = { weekday: 9, weekend: 11 }; // година відкриття
 const LAST = 21;                           // останній початок броні
 const PHONE_TEXT = '093 609 05 08';
 // Ключ сайту (Site key) з Cloudflare Turnstile. Поки порожній, перевірка «я не робот» вимкнена.
-const TURNSTILE_SITE_KEY = '0x4AAAAAAFSoc8inME7OPeJR';
+const TURNSTILE_SITE_KEY = '';
 // ==========================
 
 (function () {
@@ -72,6 +72,22 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAFSoc8inME7OPeJR';
   }
   function show(text) { msg.textContent = text; msg.hidden = !text; }
 
+  // --- Схема залу: вибір столу ---
+  const plan = $('plan'), tableSel = $('bTable');
+  function setTable(v) {
+    if (!tableSel) return;
+    tableSel.value = v;
+    if (plan) plan.querySelectorAll('.tbl').forEach((g) => { const on = g.dataset.t === v; g.classList.toggle('on', on); g.setAttribute('aria-pressed', on); });
+  }
+  if (plan && tableSel) {
+    plan.querySelectorAll('.tbl').forEach((g) => {
+      const pick = () => setTable(tableSel.value === g.dataset.t ? '' : g.dataset.t);
+      g.addEventListener('click', pick);
+      g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+    });
+    tableSel.addEventListener('change', () => setTable(tableSel.value));
+  }
+
   // --- Захист від спаму: Cloudflare Turnstile ---
   let tsId = null, tsToken = '';
   function mountTs() {
@@ -96,7 +112,7 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAFSoc8inME7OPeJR';
     const payload = {
       name: f.name.value.trim(), phone: normPhone(f.phone.value), date: f.date.value, time: f.time.value,
       guests: parseInt(f.guests.value, 10), occasion: f.occ.value, comment: f.note.value.trim(),
-      website: form.elements.website.value, elapsed: Date.now() - loaded, token: tsToken
+      website: form.elements.website.value, elapsed: Date.now() - loaded, table: tableSel ? tableSel.value : '', token: tsToken
     };
     try {
       const r = await fetch(BOOKING_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -119,5 +135,5 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAFSoc8inME7OPeJR';
       else show('Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте: ' + PHONE_TEXT);
     } finally { btn.disabled = false; btn.textContent = label; resetTs(); }
   });
-  $('bookAgain').addEventListener('click', () => { form.reset(); f.guests.value = 2; slots(); ok.hidden = true; form.hidden = false; f.name.focus(); });
+  $('bookAgain').addEventListener('click', () => { form.reset(); setTable(''); f.guests.value = 2; slots(); ok.hidden = true; form.hidden = false; f.name.focus(); });
 })();
