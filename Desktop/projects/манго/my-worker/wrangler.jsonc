@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "restaurant-booking",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-08",
+  "vars": {
+    // Тільки домен, БЕЗ /my-restaurant-site і без слеша в кінці
+    "ALLOWED_ORIGIN": "https://kwent0n.github.io,https://mango-bbq-varash.github.io"
+  }
+}

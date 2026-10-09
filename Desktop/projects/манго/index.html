@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121c1a" media="(prefers-color-scheme: dark)">
+<title>Mango BBQ — затишне місце у Вараші</title>
+<link rel="icon" href="images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Cormorant+Garamond:wght@500;600&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">Mango <span>BBQ</span></a>
+    <nav id="nav" aria-label="Головне меню"><a href="#pro-nas">Про нас</a><a href="#menu">Меню</a><a href="#bron">Бронювання</a><a href="#kontakty">Контакти</a><a class="btn nav-call" href="tel:+380936090508">Зателефонувати</a></nav>
+    <button class="burger" type="button" aria-label="Відкрити меню" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <h1>Ласкаво просимо в кафе!</h1>
+    <p>Смачна їжа з мангалу, тепла зала, келих вина або кава. Приходьте на обід, зустріч із друзями чи сімейне свято.</p>
+    <div class="cta">
+      <a class="btn" href="#bron">Забронювати стіл</a>
+      <a class="btn soft" href="#menu">Дивитися меню</a>
+    </div>
+  </div>
+</div>
+
+<section id="pro-nas" class="alt">
+  <div class="wrap">
+    <h2 class="title">Що у нас є</h2>
+    <p class="lead">Світла зала зі смарагдовими диванами, живі квіти на столах і страви, які хочеться розділити з компанією.</p>
+    <div class="about">
+      <div><h3>BBQ</h3><p>Страви з мангалу та м'ясо, томлене годинами у спеціях і димі.</p></div>
+      <div><h3>Більярд</h3><p>Окрема зала зі столом. Можна зіграти партію після вечері.</p></div>
+      <div><h3>Банкети</h3><p>Накриті столи з закусками, сирами, салатами та гарячим.</p></div>
+      <div><h3>Корпоративи</h3><p>Затишна зала для святкування з командою.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <h2 class="title">Меню</h2>
+    <p class="lead">Оберіть категорію або знайдіть страву за назвою.</p>
+    <div class="menu-tools">
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Знайти страву…" aria-label="Пошук по меню" autocomplete="off">
+      </label>
+      <div class="chips" id="chips">
+        <button class="chip on" data-cat="all" aria-pressed="true">Усе меню</button>
+        <button class="chip" data-cat="bbq" aria-pressed="false">BBQ та гаряче</button>
+        <button class="chip" data-cat="starters" aria-pressed="false">Закуски</button>
+        <button class="chip" data-cat="salads" aria-pressed="false">Салати</button>
+        <button class="chip" data-cat="drinks" aria-pressed="false">Напої</button>
+      </div>
+    </div>
+
+    <div class="menu" id="menuList">
+      <div class="cat" data-cat="bbq">
+        <h3 class="cat-title">BBQ та гаряче</h3>
+        <div class="items">
+          <div class="dish"><div><h3>Шаурма з томленою свининою</h3><p>Свинина з нашого BBQ, понад 8 годин у спеціях і димі.</p></div><span class="new">новинка</span></div>
+        </div>
+      </div>
+      <div class="cat" data-cat="starters">
+        <h3 class="cat-title">Закуски</h3>
+        <div class="items">
+          <div class="dish"><div><h3>Сирна тарілка з медом</h3><p>Добірні сири, мед і свіжі овочі.</p></div></div>
+        </div>
+      </div>
+      <div class="cat" data-cat="salads">
+        <h3 class="cat-title">Салати</h3>
+        <div class="items">
+          <div class="dish"><div><h3>Салат з куркою та пармезаном</h3><p>Свіжі овочі, куряче філе, сир.</p></div></div>
+        </div>
+      </div>
+      <div class="cat" data-cat="drinks">
+        <h3 class="cat-title">Напої</h3>
+        <div class="items">
+          <div class="dish"><div><h3>Літні коктейлі</h3><p>Освіжаючі напої з льодом і цитрусами.</p></div></div>
+        </div>
+      </div>
+      <p class="empty" id="empty" hidden>Нічого не знайшли. Спробуйте інше слово або зателефонуйте нам.</p>
+    </div>
+    <p class="note">Повне меню та ціни уточнюйте за телефоном. Новинки публікуємо в Instagram <a href="https://www.instagram.com/mango_cafe_bbq_varash" rel="noopener">@mango_cafe_bbq_varash</a>.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2 class="title">Атмосфера</h2>
+    <p class="lead">Смарагдовий велюр, світле дерево, кремові крісла та білі лілії.</p>
+    <div class="gal">
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery1.jpg" alt=""><figcaption>Зала з велюровими диванами</figcaption></figure>
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery2.jpg" alt=""><figcaption>Дерев'яні рейки та крісла</figcaption></figure>
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery3.jpg" alt=""><figcaption>Шаурма та BBQ</figcaption></figure>
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery4.jpg" alt=""><figcaption>Більярдна зала</figcaption></figure>
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery5.jpg" alt=""><figcaption>Накритий стіл</figcaption></figure>
+      <figure class="shot"><img loading="lazy" decoding="async" src="images/gallery6.jpg" alt=""><figcaption>Сирна тарілка та салати</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="bron">
+  <div class="wrap book">
+    <div>
+      <h2 class="title">Забронювати стіл</h2>
+      <p class="lead">Залиште заявку, і ми передзвонимо, щоб підтвердити бронь. Для банкету чи корпоративу вкажіть привід і кількість гостей.</p>
+      <ul class="book-facts">
+        <li>Працюємо: пн–пт 9:00–22:00, сб–нд 11:00–22:00</li>
+        <li>Останній час для бронювання: 21:00</li>
+        <li>Велика компанія? Краще зателефонуйте: <a href="tel:+380936090508">093 609 05 08</a></li>
+      </ul>
+    </div>
+    <div class="book-card">
+      <form id="bookForm" novalidate>
+        <div class="field"><label for="bName">Ваше ім'я</label><input id="bName" name="name" autocomplete="given-name" maxlength="60" required><small class="ferr" hidden></small></div>
+        <div class="field"><label for="bPhone">Телефон</label><input id="bPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0XX XXX XX XX" required><small class="ferr" hidden></small></div>
+        <div class="row">
+          <div class="field"><label for="bDate">Дата</label><input id="bDate" name="date" type="date" required><small class="ferr" hidden></small></div>
+          <div class="field"><label for="bTime">Час</label><select id="bTime" name="time" required disabled><option value="">Спочатку оберіть дату</option></select><small class="ferr" hidden></small></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bGuests">Кількість гостей</label>
+            <div class="stepper"><button type="button" data-step="-1" aria-label="Менше гостей">−</button><input id="bGuests" name="guests" type="number" min="1" max="50" value="2" inputmode="numeric"><button type="button" data-step="1" aria-label="Більше гостей">+</button></div>
+            <small class="ferr" hidden></small></div>
+          <div class="field"><label for="bOcc">Привід</label><select id="bOcc" name="occasion"><option>Звичайний візит</option><option>День народження</option><option>Банкет</option><option>Корпоратив</option><option>Більярд</option></select></div>
+        </div>
+        <div class="field"><label for="bNote">Побажання (необов'язково)</label><textarea id="bNote" name="comment" maxlength="400" placeholder="Наприклад: з дитиною, біля вікна"></textarea></div>
+        <div class="hp" aria-hidden="true"><label>Сайт <input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn" type="submit">Надіслати заявку</button>
+        <p class="form-msg" id="bookMsg" role="alert" hidden></p>
+        <p class="fine">Це заявка, а не підтверджена бронь: ми зателефонуємо вам найближчим часом.</p>
+      </form>
+      <div class="book-ok" id="bookOk" role="status" hidden>
+        <h3>Дякуємо!</h3>
+        <p id="bookOkText"></p>
+        <button class="btn soft" type="button" id="bookAgain">Надіслати ще одну заявку</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakty">
+  <div class="wrap info">
+    <div>
+      <h2 class="title">Години роботи</h2>
+      <table>
+        <tr><td>Понеділок — п'ятниця</td><td>9:00–22:00</td></tr>
+        <tr><td>Субота — неділя</td><td>11:00–22:00</td></tr>
+      </table>
+      <p class="note">м. Вараш. Кафе «Mango» на карті нижче.</p>
+      <p><a class="btn soft" href="https://maps.app.goo.gl/j5qWTaaCV51gV2Ru6" rel="noopener" target="_blank">Прокласти маршрут</a></p>
+    </div>
+    <div>
+      <h2 class="title">Зателефонуйте нам</h2>
+      <div class="phones">
+        <a href="tel:+380936090508"><small>Кафе та бронювання</small><strong>093 609 05 08</strong></a>
+        <a href="tel:+380677770191"><small>BBQ</small><strong>067 777 01 91</strong></a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="map">
+      <iframe title="Кафе Mango на карті" src="https://maps.google.com/maps?q=51.3597471,25.8532262&amp;z=16&amp;hl=uk&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mango BBQ, Вараш</span>
+    <a href="https://www.instagram.com/mango_cafe_bbq_varash" rel="noopener">Instagram @mango_cafe_bbq_varash</a>
+  </div>
+</footer>
+<script>
+(function(){
+  var groups=[['.hero h1, .hero p, .hero .cta',140],['section .title, section .lead, section .note',0],['.about > div',90],['.menu .dish',110],['.gal .shot',90],['.info > div',140],['.phones a',100],['table',0],['.map',0]];
+  var els=[];
+  groups.forEach(function(g){document.querySelectorAll(g[0]).forEach(function(el,i){
+    el.classList.add('reveal');el.style.setProperty('--d',Math.min(i*g[1],450)+'ms');els.push(el);
+  });});
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  });},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  els.forEach(function(el){io.observe(el)});
+})();
+</script>
+<script>
+(function(){
+  var q=document.getElementById('q'),chips=document.querySelectorAll('.chip'),cats=document.querySelectorAll('.cat'),empty=document.getElementById('empty');
+  var cat='all';
+  function norm(s){return s.toLowerCase().replace(/ё/g,'е')}
+  function apply(){
+    var term=norm(q.value.trim()),shown=0;
+    cats.forEach(function(c){
+      var inCat=term||cat==='all'||c.dataset.cat===cat,n=0;
+      c.querySelectorAll('.dish').forEach(function(d){
+        var ok=inCat&&(!term||norm(d.textContent+' '+c.dataset.cat+' '+c.querySelector('.cat-title').textContent).indexOf(term)>-1);
+        d.hidden=!ok;if(ok){n++;d.classList.remove('flash');void d.offsetWidth;d.classList.add('flash');}
+      });
+      c.hidden=!n;shown+=n;
+    });
+    empty.hidden=shown>0;
+    chips.forEach(function(b){var on=!term&&b.dataset.cat===cat;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+  }
+  chips.forEach(function(b){b.addEventListener('click',function(){cat=b.dataset.cat;q.value='';apply();
+    var t=document.querySelector('.menu-tools');if(t){var y=document.getElementById('menu').getBoundingClientRect().top+window.scrollY-70;if(window.scrollY>y+60)window.scrollTo({top:y,behavior:'smooth'});}
+  })});
+  q.addEventListener('input',apply);
+})();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.burger'),n=document.getElementById('nav');
+  if(!b||!n)return;
+  function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Закрити меню':'Відкрити меню');}
+  b.addEventListener('click',function(){set(!n.classList.contains('open'))});
+  n.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('click',function(e){if(!e.target.closest('header'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  window.matchMedia('(min-width:701px)').addEventListener('change',function(){set(false)});
+})();
+</script>
+<script src="booking.js" defer></script>
+</body>
+</html>
